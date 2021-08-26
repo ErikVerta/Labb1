@@ -4,10 +4,11 @@ namespace Labb1
 {
     class Program
     {
-        public static string Input;
-        public static int firstIndex;
-        public static int secondIndex;
-        public static long sumOfSubstrings = 0;
+        private static string Input;
+        private static string StartOfSubstring;
+        private static int FirstIndex;
+        private static int SecondIndex;
+        private static long SumOfSubstrings = 0;
         static void Main(string[] args)
         {         
             //Ber användaren om en sträng samt sparar ner denna sträng i Input.
@@ -19,27 +20,28 @@ namespace Labb1
             LookForIntegerInString();
             
             //Skriver ut totalen av alla substrängar alltså sumOfSubstrings.
-            Console.WriteLine($"Total = {sumOfSubstrings}");
+            Console.WriteLine($"Total = {SumOfSubstrings}");
         }
         
         //denna metoden letar efter en substräng som börjar och slutar på samma siffra.
         public static void LookForIntegerInString ()
         {
-            //Letar efter en siffra i strängen. Om den hittar en siffra så sparar den ner dess index i firstIndex samt sparar ner vilken siffra det är i startOfSubstring.
+            //Letar efter en siffra i strängen. Om den hittar en siffra så sparar den ner dess index i FirstIndex samt sparar ner vilken siffra det är i StartOfSubstring.
             for (int i = 0; i < Input.Length; i++)
             {
-                if (int.TryParse(Input.Substring(i, 1), out int x))
+                if (int.TryParse(Input.Substring(i, 1), out int number))
                 {
-                    firstIndex = i;
-                    string startOfSubstring = Input.Substring(i, 1);
+                    FirstIndex = i;
+                    StartOfSubstring = number.ToString();
                     
-                    //Letar efter nästa siffra som är likadan samt sparar ner dess index. Kallar sedan på LookForLetters metoden.
-                    for (int z = firstIndex + 1; z < Input.Length; z++)
+                    //Letar efter nästa siffra som är likadan samt sparar ner dess index i SecondIndex. Kallar sedan på LookForLetters metoden.
+                    //Den skickar även med ett argument till LookForLetters metoden som är substrängen, alltså från den siffran den hittade tills nästa siffra som är likadan.
+                    for (int j = FirstIndex + 1; j < Input.Length; j++)
                     {
-                        if (Input.Substring(z, 1) == startOfSubstring)
+                        if (Input.Substring(j, 1) == StartOfSubstring)
                         {
-                            secondIndex = z;
-                            LookForLetters(Input.Substring(firstIndex, secondIndex - firstIndex + 1));
+                            SecondIndex = j;
+                            LookForLetters(Input.Substring(FirstIndex, SecondIndex - FirstIndex + 1));
                             break;
                         }
                     }
@@ -48,7 +50,7 @@ namespace Labb1
         }
         
         //Denna metoden kollar så att substrängen inte innehåller någon bokstav.
-        //Om den inte innehåller någon bokstav så plussar den på talet på sumOfSubstrings samt kallar på PrintString metoden.
+        //Om den inte innehåller någon bokstav så plussar den på talet på SumOfSubstrings samt kallar på PrintString metoden med substrängen som argument.
         //Om den innehåller en bokstav så återvänder den till LookForIntegerInString metoden.
         public static void LookForLetters (string subString)
         {
@@ -63,35 +65,24 @@ namespace Labb1
                     return;
                 }
             }
-            sumOfSubstrings += long.Parse(subString);
-            PrintString();
+            SumOfSubstrings += long.Parse(subString);
+            PrintString(subString);
         }
         
         //Denna metoden skriver ut strängen samt ändrar färg på substrängen.
-        public static void PrintString()
+        public static void PrintString(string subString)
         {          
-            //Skriver ut varje symbol i strängen fram tills firstIndex.
-            for (int i = 0; i < firstIndex; i++)
-            {
-                Console.Write(Input.Substring(i, 1));
-            }
+            //Skriver ut början av strängen fram tills firstIndex.        
+            Console.Write(Input.Substring(0, FirstIndex));           
             
-            //Ändrar färg till röd samt skriver ut varje symbol från firstIndex till och med secondIndex, alltså hela substrängen.
-            for (int i = firstIndex; i <= secondIndex; i++)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(Input.Substring(i, 1));
-            }
-            
-            //Byter tillbaks färgen till grå.
-            Console.ForegroundColor = ConsoleColor.Gray;
-            
-            //Skriver ut varje symbol från secondIndex + 1 tills slutet av strängen, alltså resten av strängen.
-            for (int i = secondIndex + 1; i < Input.Length; i++)
-            {
-                Console.Write(Input.Substring(i, 1));
-            }
-            
+            //Ändrar färg till röd samt skriver ut substrängen.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(subString);
+
+            //Byter tillbaks färgen till grå samt Skriver ut resterande av strängen från secondIndex + 1 tills slutet av strängen.
+            Console.ForegroundColor = ConsoleColor.Gray;           
+            Console.Write(Input.Substring(SecondIndex + 1, Input.Length - (FirstIndex + subString.Length)));
+           
             //Byter rad.
             Console.WriteLine("");
         }
