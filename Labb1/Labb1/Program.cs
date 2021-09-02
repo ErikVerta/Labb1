@@ -15,7 +15,8 @@ namespace Labb1
             //Skriver sedan ut inputen samt kallar på SearchForInteger metoden.
             Console.WriteLine("Input a string:");
             _input = Console.ReadLine();
-            Console.WriteLine($"Output för input {_input}:");
+            Console.Clear();
+            Console.WriteLine($"Output for input {_input}:");
             SearchForInteger();
             
             //Skriver ut totalen av alla substrängar alltså sumOfSubstrings.
