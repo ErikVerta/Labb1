@@ -1,1 +1,30 @@
 # Labb1
+
+This is my first assignment in the c# course. It's an algorithm that takes a string input from the user, then searches for all substrings that are numbers that begin
+and ends in the same digit, without the start / end digit, or any other character other than numbers occur in between.
+
+## Example
+
+**Input:** 29535123p48723487597645723645
+
+**Output:**
+
+**2953512**3p48723487597645723645 <br/>
+29**535**123p48723487597645723645 <br/>
+295**35123**p48723487597645723645 <br/>
+29535123p**487234**87597645723645 <br/>
+29535123p4**872348**7597645723645 <br/>
+29535123p48**723487**597645723645 <br/>
+29535123p487**2348759764572**3645 <br/>
+29535123p4872**3487597645723**645 <br/>
+29535123p48723**48759764**5723645 <br/>
+29535123p4872348**7597**645723645 <br/>
+29535123p48723487**597645**723645 <br/>
+29535123p4872348759**76457**23645 <br/>
+29535123p48723487597**6457236**45 <br/>
+29535123p487234875976**4572364**5 <br/>
+29535123p4872348759764**5723645** <br/>
+
+# languages
+
+- c#
